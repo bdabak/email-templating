@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZHCM_UX_ALPL_SRV" xml:lang="tr" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <Annotation Term="Core.SchemaVersion" String="1.0.0" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+            <EntityType Name="HolidayCalendar" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Year"/>
+                </Key>
+                <Property Name="Year" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Sayaç" sap:filterable="false"/>
+                <Property Name="BeginDate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Gçrl.bşl."/>
+                <Property Name="EndDate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Gçrl.sonu"/>
+                <NavigationProperty Name="HolidayInfoSet" Relationship="ZHCM_UX_ALPL_SRV.CalendarToHolidayInfo" FromRole="FromRole_CalendarToHolidayInfo" ToRole="ToRole_CalendarToHolidayInfo"/>
+            </EntityType>
+            <EntityType Name="HolidayInfo" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="HolidayGroupId"/>
+                </Key>
+                <Property Name="HolidayGroupId" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Tatil gruplaması"/>
+                <Property Name="HolidayGroupText" Type="Edm.String" MaxLength="50" sap:unicode="false" sap:label="Tatil grupl. metni"/>
+                <NavigationProperty Name="HolidayDateSet" Relationship="ZHCM_UX_ALPL_SRV.HolidayInfoToDate" FromRole="FromRole_HolidayInfoToDate" ToRole="ToRole_HolidayInfoToDate"/>
+            </EntityType>
+            <EntityType Name="HolidayDate" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="HolidayId"/>
+                </Key>
+                <Property Name="HolidayId" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Tatil günü tn."/>
+                <Property Name="HolidayName" Type="Edm.String" MaxLength="30" sap:unicode="false" sap:label="Resmi tatil mtn.uzun"/>
+                <Property Name="HolidayGroupId" Type="Edm.String" MaxLength="5" sap:unicode="false" sap:label="Tatil gruplaması"/>
+                <Property Name="Month" Type="Edm.String" MaxLength="2" sap:unicode="false" sap:label="İki basamaklıNo"/>
+                <Property Name="Day" Type="Edm.String" MaxLength="2" sap:unicode="false" sap:label="İki basamaklıNo"/>
+                <Property Name="DayClass" Type="Edm.String" MaxLength="1" sap:unicode="false" sap:label="Resmi tatil snf"/>
+            </EntityType>
+            <EntityType Name="EmployeeInfo" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="EmployeeNumber"/>
+                </Key>
+                <Property Name="EmployeeNumber" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Personel no."/>
+                <Property Name="EmployeeName" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="Çlşn/bşv.adı"/>
+                <Property Name="PlanId" Type="Edm.String" MaxLength="32" sap:unicode="false" sap:label="Plan id"/>
+                <Property Name="PlanningEnabled" Type="Edm.Boolean" sap:unicode="false" sap:label="Plan yapabilir?"/>
+                <Property Name="CouncilApprovalStatus" Type="Edm.String" MaxLength="3" sap:unicode="false" sap:label="Kurul onayı durumu"/>
+                <Property Name="ShiftingEnabled" Type="Edm.Boolean" sap:unicode="false" sap:label="Öteleme yapabilir?"/>
+                <Property Name="PlanningBeginDate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Plan başlangıç"/>
+                <Property Name="PlanningEndDate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Plan bitiş"/>
+                <Property Name="QuotaAccrualBeginDate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Kota hakediş başl."/>
+                <Property Name="QuotaAccrualEndDate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Kota hakediş bitiş"/>
+                <Property Name="NextQuotaAccrualBeginDate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Sonraki kota hakediş başl."/>
+                <Property Name="QuotaAtPlanning" Type="Edm.Decimal" Precision="7" Scale="2" sap:unicode="false" sap:label="Planlama kotası"/>
+                <Property Name="QuotaAvailable" Type="Edm.Decimal" Precision="7" Scale="2" sap:unicode="false" sap:label="Toplam kota"/>
+                <Property Name="QuotaToBePlanned" Type="Edm.Decimal" Precision="7" Scale="2" sap:unicode="false" sap:label="Planlanması gereken"/>
+                <Property Name="QuotaPlanned" Type="Edm.Decimal" Precision="7" Scale="2" sap:unicode="false" sap:label="Planlanan gün"/>
+                <Property Name="Authorized" Type="Edm.Boolean" sap:unicode="false" sap:label="Yetkili"/>
+            </EntityType>
+            <EntityType Name="Return" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Type"/>
+                    <PropertyRef Name="Id"/>
+                    <PropertyRef Name="Number"/>
+                </Key>
+                <Property Name="Type" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="İleti tipi"/>
+                <Property Name="Id" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Message Class"/>
+                <Property Name="Number" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="İleti numarası"/>
+                <Property Name="Message" Type="Edm.String" MaxLength="220" sap:unicode="false" sap:label="İleti metni"/>
+            </EntityType>
+            <EntityType Name="PlannedLeave" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PlannedLeaveId"/>
+                </Key>
+                <Property Name="PlannedLeaveId" Type="Edm.String" Nullable="false" MaxLength="32" sap:unicode="false" sap:label="Planlı izin id"/>
+                <Property Name="EmployeeNumber" Type="Edm.String" MaxLength="8" sap:unicode="false" sap:label="Personel no."/>
+                <Property Name="StartDate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Gçrl.bşl."/>
+                <Property Name="EndDate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Gçrl.sonu"/>
+                <Property Name="LeaveType" Type="Edm.String" MaxLength="2" sap:unicode="false" sap:label="İzin tipi"/>
+                <Property Name="LeaveStatus" Type="Edm.String" MaxLength="3" sap:unicode="false" sap:label="İzin durumu"/>
+                <Property Name="UsedQuota" Type="Edm.Decimal" Precision="7" Scale="2" sap:unicode="false" sap:label="Kota kullanımı"/>
+                <Property Name="PlanId" Type="Edm.String" MaxLength="32" sap:unicode="false" sap:label="Plan id"/>
+                <Property Name="ErrorMessage" Type="Edm.String" sap:unicode="false" sap:label="Hata mesajı"/>
+            </EntityType>
+            <EntityType Name="TeamCalendarLeave" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Pernr"/>
+                </Key>
+                <Property Name="Pernr" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Personel no."/>
+                <Property Name="Begda" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Gçrl.bşl."/>
+                <Property Name="Endda" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Gçrl.sonu"/>
+                <Property Name="Tclty" Type="Edm.String" MaxLength="2" sap:unicode="false" sap:label="İzin Türleri"/>
+            </EntityType>
+            <EntityType Name="TeamCalendarOrganization" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Wegid"/>
+                    <PropertyRef Name="Loopc"/>
+                    <PropertyRef Name="Seqnr"/>
+                </Key>
+                <Property Name="Wegid" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Dğrln.yolu"/>
+                <Property Name="Rooto" Type="Edm.Boolean" sap:unicode="false" sap:label="DOĞRU"/>
+                <Property Name="Loopc" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Döngü sıra"/>
+                <Property Name="Seqnr" Type="Edm.Int32" Nullable="false" sap:unicode="false" sap:label="Endeks"/>
+                <Property Name="Otype" Type="Edm.String" MaxLength="2" sap:unicode="false" sap:label="Nesne tipi"/>
+                <Property Name="Objid" Type="Edm.String" MaxLength="8" sap:unicode="false" sap:label="Nesne tn"/>
+                <Property Name="Stext" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="Tanım"/>
+                <Property Name="OtypeR1" Type="Edm.String" MaxLength="2" sap:unicode="false" sap:label="Nesne tipi"/>
+                <Property Name="ObjidR1" Type="Edm.String" MaxLength="8" sap:unicode="false" sap:label="Nesne tn"/>
+                <Property Name="StextR1" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="Tanım"/>
+                <Property Name="OtypeR2" Type="Edm.String" MaxLength="2" sap:unicode="false" sap:label="Nesne tipi"/>
+                <Property Name="ObjidR2" Type="Edm.String" MaxLength="8" sap:unicode="false" sap:label="Nesne tn"/>
+                <Property Name="StextR2" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="Tanım"/>
+                <Property Name="OtypeR3" Type="Edm.String" MaxLength="2" sap:unicode="false" sap:label="Nesne tipi"/>
+                <Property Name="ObjidR3" Type="Edm.String" MaxLength="8" sap:unicode="false" sap:label="Nesne tn"/>
+                <Property Name="StextR3" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="Tanım"/>
+                <Property Name="Statu" Type="Edm.String" MaxLength="50" sap:unicode="false" sap:label="Durum açıklaması"/>
+                <Property Name="Ismng" Type="Edm.Boolean" sap:unicode="false" sap:label="DOĞRU"/>
+                <Property Name="Pupsq" Type="Edm.Int32" sap:unicode="false" sap:label="Endeks"/>
+                <Property Name="Hrcomp" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="Sanal Şirket/HR"/>
+            </EntityType>
+            <EntityType Name="TeamCalendarEmployee" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Pernr"/>
+                </Key>
+                <Property Name="Check" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="CHECK" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Pernr" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Personel no."/>
+                <Property Name="Ename" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="Çlşn/bşv.adı"/>
+                <Property Name="Plans" Type="Edm.String" MaxLength="8" sap:unicode="false" sap:label="Pozisyon"/>
+                <Property Name="Plstx" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="Tanım"/>
+                <Property Name="Datum" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Tarih"/>
+                <Property Name="Orgeh" Type="Edm.String" MaxLength="350" sap:unicode="false" sap:label="ORGEH"/>
+                <NavigationProperty Name="TeamCalendarLeaveSet" Relationship="ZHCM_UX_ALPL_SRV.TeamCalendarEmployeeToLeave" FromRole="FromRole_TeamCalendarEmployeeToLeave" ToRole="ToRole_TeamCalendarEmployeeToLeave"/>
+            </EntityType>
+            <EntityType Name="LeaveRequest" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="EmployeeID"/>
+                    <PropertyRef Name="RequestID"/>
+                    <PropertyRef Name="ChangeStateID"/>
+                    <PropertyRef Name="LeaveKey"/>
+                </Key>
+                <Property Name="AdditionalFields" Type="ZHCM_UX_ALPL_SRV.AdditionalFields" Nullable="false"/>
+                <Property Name="EmployeeID" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Personel no." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="RequestID" Type="Edm.Guid" Nullable="false" sap:unicode="false" sap:label="Belge tn." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ChangeStateID" Type="Edm.Int32" Nullable="false" sap:unicode="false" sap:label="Belge versiyonu" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LeaveKey" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="c" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Kaltg" Type="Edm.Decimal" Nullable="false" Precision="6" Scale="2" sap:unicode="false" sap:label="Calendar days" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Abrtg" Type="Edm.Decimal" Nullable="false" Precision="6" Scale="2" sap:unicode="false" sap:label="Payr.days" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DeductionInfo" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="DEDUCTION_INFO" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="InfoType" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Bilgi tipi" sap:sortable="false"/>
+                <Property Name="TotalDeduction" Type="Edm.Decimal" Nullable="false" Precision="10" Scale="5" sap:unicode="false" sap:label="Quota number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TimeUnitDeduction" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Time unit/meas." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ActionCode" Type="Edm.Int16" Nullable="false" sap:unicode="false" sap:label="İşlem kodu" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TimeUnitTextDeduction" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Description" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ProcessCheckOnlyInd" Type="Edm.Boolean" sap:unicode="false" sap:label="DOĞRU" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="StatusCode" Type="Edm.String" MaxLength="12" sap:unicode="false" sap:label="Belge durumu" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="StatusName" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="20 karakter" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="AbsenceTypeCode" Type="Edm.String" MaxLength="4" sap:unicode="false" sap:label="Dvms/devam türü" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="AbsenceTypeName" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="Dvm/dvms.metni" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="StartDate" Type="Edm.DateTime" Precision="0" sap:unicode="false" sap:label="Gçrl.bşl." sap:sortable="false"/>
+                <Property Name="StartTime" Type="Edm.String" MaxLength="6" sap:unicode="false" sap:label="Zaman" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="EndDate" Type="Edm.DateTime" Precision="0" sap:unicode="false" sap:label="Gçrl.sonu" sap:sortable="false"/>
+                <Property Name="EndTime" Type="Edm.String" MaxLength="6" sap:unicode="false" sap:label="Zaman" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WorkingHoursDuration" Type="Edm.String" MaxLength="9" sap:unicode="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WorkingDaysDuration" Type="Edm.Decimal" Precision="6" Scale="2" sap:unicode="false" sap:label="Dvms./devam gü." sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TimeUnit" Type="Edm.String" MaxLength="3" sap:unicode="false" sap:label="Zaman birimi" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TimeUnitCode" Type="Edm.String" MaxLength="60" sap:unicode="false" sap:label="Kısa tanım" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ApproverEmployeeID" Type="Edm.String" MaxLength="8" sap:unicode="false" sap:label="Personel no." sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ApproverEmployeeName" Type="Edm.String" MaxLength="80" sap:unicode="false" sap:label="Tam ad" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Notes" Type="Edm.String" sap:unicode="false" sap:label="Note Details required to display" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ActionDeleteInd" Type="Edm.Boolean" sap:unicode="false" sap:label="DOĞRU" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ActionModifyInd" Type="Edm.Boolean" sap:unicode="false" sap:label="DOĞRU" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LastChangeDate" Type="Edm.DateTime" Precision="0" sap:unicode="false" sap:label="Tarih" sap:creatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LastChangeTime" Type="Edm.String" MaxLength="6" sap:unicode="false" sap:label="Zaman" sap:creatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LastChangeEmployeeName" Type="Edm.String" MaxLength="80" sap:unicode="false" sap:label="Tam ad" sap:creatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SequenceID" Type="Edm.Int16" sap:unicode="false" sap:label="Int2" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LeaveRequestType" Type="Edm.Int16" sap:unicode="false" sap:label="Int2" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="FirstSubmissionDate" Type="Edm.DateTime" Precision="0" sap:unicode="false" sap:label="Tarih" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="FirstSubmissionTime" Type="Edm.String" MaxLength="6" sap:unicode="false" sap:label="Zaman" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="AttachmentsExist" Type="Edm.String" MaxLength="1" sap:unicode="false" sap:label="DOĞRU" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="AttachmentDetails" Type="Edm.String" sap:unicode="false" sap:label="File details required to display" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="PlannedLeaveOperation" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Actio"/>
+                </Key>
+                <Property Name="Actio" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Planlanan izin işlem"/>
+                <Property Name="PlanId" Type="Edm.String" MaxLength="32" sap:unicode="false" sap:label="Plan id"/>
+                <Property Name="PlannedLeaveId" Type="Edm.String" MaxLength="32" sap:unicode="false" sap:label="Planlı izin id"/>
+                <NavigationProperty Name="PlannedLeaveSet" Relationship="ZHCM_UX_ALPL_SRV.PlannedLeaveOperationToLeave" FromRole="FromRole_PlannedLeaveOperationToLeave" ToRole="ToRole_PlannedLeaveOperationToLeave"/>
+                <NavigationProperty Name="ReturnSet" Relationship="ZHCM_UX_ALPL_SRV.PlannedLeaveOperationToReturn" FromRole="FromRole_PlannedLeaveOperationToReturn" ToRole="ToRole_PlannedLeaveOperationToReturn"/>
+            </EntityType>
+            <EntityType Name="CalendarQuery" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="BeginDate"/>
+                    <PropertyRef Name="EndDate"/>
+                </Key>
+                <Property Name="BeginDate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Gçrl.bşl."/>
+                <Property Name="EndDate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Gçrl.sonu"/>
+                <NavigationProperty Name="HolidayCalendarSet" Relationship="ZHCM_UX_ALPL_SRV.CalendarQueryToHolidayCalendar" FromRole="FromRole_CalendarQueryToHolidayCalendar" ToRole="ToRole_CalendarQueryToHolidayCalendar"/>
+                <NavigationProperty Name="PlannedLeaveSet" Relationship="ZHCM_UX_ALPL_SRV.CalendarQueryToPlannedLeave" FromRole="FromRole_CalendarQueryToPlannedLeave" ToRole="ToRole_CalendarQueryToPlannedLeave"/>
+                <NavigationProperty Name="LeaveRequestSet" Relationship="ZHCM_UX_ALPL_SRV.CalendarQueryToLeaveRequest" FromRole="FromRole_CalendarQueryToLeaveRequest" ToRole="ToRole_CalendarQueryToLeaveRequest"/>
+            </EntityType>
+            <EntityType Name="Legend" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="LegendGroupKey"/>
+                </Key>
+                <Property Name="LegendGroupKey" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Legend grubu"/>
+                <Property Name="LegendGroupName" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="Legend tanımı"/>
+                <Property Name="DataSource" Type="Edm.String" MaxLength="2" sap:unicode="false" sap:label="Veri kaynağı"/>
+                <Property Name="LegendGroupColor" Type="Edm.String" MaxLength="50" sap:unicode="false" sap:label="Renk"/>
+                <Property Name="LeaveType" Type="Edm.String" MaxLength="4" sap:unicode="false" sap:label="İzin türü"/>
+                <Property Name="Requestable" Type="Edm.Boolean" sap:unicode="false" sap:label="Talep edilebilir"/>
+                <NavigationProperty Name="LegendItemSet" Relationship="ZHCM_UX_ALPL_SRV.LegendGroupToLegendItem" FromRole="FromRole_LegendGroupToLegendItem" ToRole="ToRole_LegendGroupToLegendItem"/>
+            </EntityType>
+            <EntityType Name="LegendItem" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="LegendGroupKey"/>
+                    <PropertyRef Name="LegendItemKey"/>
+                </Key>
+                <Property Name="LegendGroupKey" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Legend grubu"/>
+                <Property Name="LegendItemKey" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Legend öğesi"/>
+                <Property Name="LegendItemName" Type="Edm.String" MaxLength="30" sap:unicode="false" sap:label="Legend öğesi tanımla"/>
+                <Property Name="LegendItemColor" Type="Edm.String" MaxLength="50" sap:unicode="false" sap:label="Renk"/>
+                <Property Name="EventColor" Type="Edm.String" MaxLength="50" sap:unicode="false" sap:label="Artalan rengi"/>
+                <Property Name="EventStatus" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="İzin durumu"/>
+                <Property Name="EventType" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="İzin tipi"/>
+                <Property Name="Editable" Type="Edm.Boolean" sap:unicode="false" sap:label="Düzenlenebilir"/>
+                <Property Name="Deletable" Type="Edm.Boolean" sap:unicode="false" sap:label="Silinebilir"/>
+                <Property Name="Splittable" Type="Edm.Boolean" sap:unicode="false" sap:label="Bölünebilir"/>
+            </EntityType>
+            <EntityType Name="Manual" m:HasStream="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Language"/>
+                </Key>
+                <Property Name="Language" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Dil"/>
+                <Property Name="MimeType" Type="Edm.String" sap:unicode="false" sap:label="Mime tipi"/>
+            </EntityType>
+            <EntityType Name="EmailTemplate" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Maiid"/>
+                </Key>
+                <Property Name="Maiid" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="E-posta no"/>
+                <Property Name="Maicd" Type="Edm.String" MaxLength="50" sap:unicode="false" sap:label="E-posta tanıtıcısı"/>
+                <Property Name="Maids" Type="Edm.String" MaxLength="70" sap:unicode="false" sap:label="E-posta açıklaması"/>
+                <Property Name="Maicn" Type="Edm.String" sap:unicode="false" sap:label="E-posta içeriği"/>
+            </EntityType>
+            <ComplexType Name="AdditionalFields">
+                <Property Name="LGART" Type="Edm.String" MaxLength="4" sap:label="Ücret türü" sap:filterable="false"/>
+                <Property Name="VERSL" Type="Edm.String" MaxLength="1" sap:label="FM telafi türü" sap:filterable="false"/>
+                <Property Name="EXBEL" Type="Edm.String" MaxLength="8" sap:label="Sis.dışı blg.no" sap:filterable="false"/>
+                <Property Name="WTART" Type="Edm.String" MaxLength="4" sap:label="Tax Area" sap:filterable="false"/>
+                <Property Name="FAPRS" Type="Edm.String" MaxLength="2" sap:label="Dğrl.türü" sap:filterable="false"/>
+                <Property Name="KEPAU" Type="Edm.String" MaxLength="1" sap:label="Mola yok" sap:filterable="false"/>
+                <Property Name="EXPAU" Type="Edm.String" MaxLength="1" sap:label="Mola belirlendi" sap:filterable="false"/>
+                <Property Name="PBEG1" Type="Edm.Time" Precision="0" sap:label="Mola başlangıcı" sap:filterable="false"/>
+                <Property Name="PEND1" Type="Edm.Time" Precision="0" sap:label="Mola sonu" sap:filterable="false"/>
+                <Property Name="PBEZ1" Type="Edm.Decimal" Precision="4" Scale="2" sap:label="Ücretli mola" sap:filterable="false"/>
+                <Property Name="PUNB1" Type="Edm.Decimal" Precision="4" Scale="2" sap:label="Ücretsiz mola" sap:filterable="false"/>
+                <Property Name="PBEG2" Type="Edm.Time" Precision="0" sap:label="Mola başlangıcı" sap:filterable="false"/>
+                <Property Name="PEND2" Type="Edm.Time" Precision="0" sap:label="Mola sonu" sap:filterable="false"/>
+                <Property Name="PBEZ2" Type="Edm.Decimal" Precision="4" Scale="2" sap:label="Ücretli mola" sap:filterable="false"/>
+                <Property Name="PUNB2" Type="Edm.Decimal" Precision="4" Scale="2" sap:label="Ücretsiz mola" sap:filterable="false"/>
+                <Property Name="ANRTG" Type="Edm.Decimal" Precision="6" Scale="2" sap:label="Hspl.gün sayısı" sap:filterable="false"/>
+                <Property Name="LFZED" Type="Edm.DateTime" Precision="7" sap:label="Srn.üc.ödm.sonu" sap:filterable="false"/>
+                <Property Name="KRGED" Type="Edm.DateTime" Precision="7" sap:label="Hst.parası sonu" sap:filterable="false"/>
+                <Property Name="KBBEG" Type="Edm.DateTime" Precision="7" sap:label="Belgelenen bşl." sap:filterable="false"/>
+                <Property Name="RMDDA" Type="Edm.DateTime" Precision="7" sap:label="Teyit" sap:filterable="false"/>
+                <Property Name="KENN1" Type="Edm.Decimal" Precision="2" Scale="0" sap:label="Snrk.hastalık" sap:filterable="false"/>
+                <Property Name="KENN2" Type="Edm.Decimal" Precision="2" Scale="0" sap:label="Yinelenen hstl.gös." sap:filterable="false"/>
+                <Property Name="OBJECT_TYPE" Type="Edm.String" MaxLength="2" sap:label="Nesne tipi" sap:filterable="false"/>
+                <Property Name="OBJ_ID" Type="Edm.String" MaxLength="8" sap:label="Nesne tn" sap:filterable="false"/>
+                <Property Name="COMP_CODE" Type="Edm.String" MaxLength="4" sap:label="Şirket kodu" sap:filterable="false"/>
+                <Property Name="COSTCENTER" Type="Edm.String" MaxLength="10" sap:label="Masraf yeri" sap:filterable="false"/>
+                <Property Name="ORDER_ID" Type="Edm.String" MaxLength="12" sap:label="Sipariş" sap:filterable="false"/>
+                <Property Name="WBS_ELEMENT" Type="Edm.String" MaxLength="24" sap:label="PYP öğesi" sap:filterable="false"/>
+                <Property Name="VTKEN" Type="Edm.String" MaxLength="1" sap:label="Önceki gün" sap:filterable="false"/>
+                <Property Name="ABWTG" Type="Edm.Decimal" Precision="6" Scale="2" sap:label="Dvms./devam gü." sap:filterable="false"/>
+                <Property Name="KALTG" Type="Edm.Decimal" Precision="6" Scale="2" sap:label="Takvim günleri" sap:filterable="false"/>
+                <Property Name="HRSIF" Type="Edm.String" MaxLength="1" sap:label="Saat belirlendi" sap:filterable="false"/>
+                <Property Name="ALLDF" Type="Edm.String" MaxLength="1" sap:label="Tam gün" sap:filterable="false"/>
+                <Property Name="ABRTG" Type="Edm.Decimal" Precision="6" Scale="2" sap:label="Bordro günleri" sap:filterable="false"/>
+                <Property Name="ABRST" Type="Edm.Decimal" Precision="7" Scale="2" sap:label="Bordro saatleri" sap:filterable="false"/>
+                <Property Name="UMSKD" Type="Edm.String" MaxLength="6" sap:label="Hastalık tanımı" sap:filterable="false"/>
+                <Property Name="UMSCH" Type="Edm.String" MaxLength="20" sap:label="Hastalık" sap:filterable="false"/>
+                <Property Name="CUSTOMER01" Type="Edm.String" MaxLength="20" sap:label="Müşteri alanı" sap:filterable="false"/>
+                <Property Name="CUSTOMER02" Type="Edm.String" MaxLength="20" sap:label="Müşteri alanı" sap:filterable="false"/>
+                <Property Name="CUSTOMER03" Type="Edm.String" MaxLength="20" sap:label="Müşteri alanı" sap:filterable="false"/>
+                <Property Name="CUSTOMER04" Type="Edm.String" MaxLength="20" sap:label="Müşteri alanı" sap:filterable="false"/>
+                <Property Name="CUSTOMER05" Type="Edm.String" MaxLength="20" sap:label="Müşteri alanı" sap:filterable="false"/>
+                <Property Name="CUSTOMER06" Type="Edm.String" MaxLength="20" sap:label="Müşteri alanı" sap:filterable="false"/>
+                <Property Name="CUSTOMER07" Type="Edm.String" MaxLength="20" sap:label="Müşteri alanı" sap:filterable="false"/>
+                <Property Name="CUSTOMER08" Type="Edm.String" MaxLength="20" sap:label="Müşteri alanı" sap:filterable="false"/>
+                <Property Name="CUSTOMER09" Type="Edm.String" MaxLength="20" sap:label="Müşteri alanı" sap:filterable="false"/>
+                <Property Name="CUSTOMER10" Type="Edm.String" MaxLength="20" sap:label="Müşteri alanı" sap:filterable="false"/>
+                <Property Name="ZApprovers" Type="Edm.String" sap:filterable="false"/>
+            </ComplexType>
+            <Association Name="PlannedLeaveOperationToLeave" sap:content-version="1">
+                <End Type="ZHCM_UX_ALPL_SRV.PlannedLeaveOperation" Multiplicity="1" Role="FromRole_PlannedLeaveOperationToLeave"/>
+                <End Type="ZHCM_UX_ALPL_SRV.PlannedLeave" Multiplicity="*" Role="ToRole_PlannedLeaveOperationToLeave"/>
+            </Association>
+            <Association Name="PlannedLeaveOperationToReturn" sap:content-version="1">
+                <End Type="ZHCM_UX_ALPL_SRV.PlannedLeaveOperation" Multiplicity="1" Role="FromRole_PlannedLeaveOperationToReturn"/>
+                <End Type="ZHCM_UX_ALPL_SRV.Return" Multiplicity="*" Role="ToRole_PlannedLeaveOperationToReturn"/>
+            </Association>
+            <Association Name="HolidayInfoToDate" sap:content-version="1">
+                <End Type="ZHCM_UX_ALPL_SRV.HolidayInfo" Multiplicity="1" Role="FromRole_HolidayInfoToDate"/>
+                <End Type="ZHCM_UX_ALPL_SRV.HolidayDate" Multiplicity="*" Role="ToRole_HolidayInfoToDate"/>
+            </Association>
+            <Association Name="CalendarToHolidayInfo" sap:content-version="1">
+                <End Type="ZHCM_UX_ALPL_SRV.HolidayCalendar" Multiplicity="1" Role="FromRole_CalendarToHolidayInfo"/>
+                <End Type="ZHCM_UX_ALPL_SRV.HolidayInfo" Multiplicity="*" Role="ToRole_CalendarToHolidayInfo"/>
+            </Association>
+            <Association Name="LegendGroupToLegendItem" sap:content-version="1">
+                <End Type="ZHCM_UX_ALPL_SRV.Legend" Multiplicity="1" Role="FromRole_LegendGroupToLegendItem"/>
+                <End Type="ZHCM_UX_ALPL_SRV.LegendItem" Multiplicity="*" Role="ToRole_LegendGroupToLegendItem"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_LegendGroupToLegendItem">
+                        <PropertyRef Name="LegendGroupKey"/>
+                    </Principal>
+                    <Dependent Role="ToRole_LegendGroupToLegendItem">
+                        <PropertyRef Name="LegendGroupKey"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="TeamCalendarEmployeeToLeave" sap:content-version="1">
+                <End Type="ZHCM_UX_ALPL_SRV.TeamCalendarEmployee" Multiplicity="1" Role="FromRole_TeamCalendarEmployeeToLeave"/>
+                <End Type="ZHCM_UX_ALPL_SRV.TeamCalendarLeave" Multiplicity="*" Role="ToRole_TeamCalendarEmployeeToLeave"/>
+            </Association>
+            <Association Name="CalendarQueryToHolidayCalendar" sap:content-version="1">
+                <End Type="ZHCM_UX_ALPL_SRV.CalendarQuery" Multiplicity="1" Role="FromRole_CalendarQueryToHolidayCalendar"/>
+                <End Type="ZHCM_UX_ALPL_SRV.HolidayCalendar" Multiplicity="*" Role="ToRole_CalendarQueryToHolidayCalendar"/>
+            </Association>
+            <Association Name="CalendarQueryToPlannedLeave" sap:content-version="1">
+                <End Type="ZHCM_UX_ALPL_SRV.CalendarQuery" Multiplicity="1" Role="FromRole_CalendarQueryToPlannedLeave"/>
+                <End Type="ZHCM_UX_ALPL_SRV.PlannedLeave" Multiplicity="*" Role="ToRole_CalendarQueryToPlannedLeave"/>
+            </Association>
+            <Association Name="CalendarQueryToLeaveRequest" sap:content-version="1">
+                <End Type="ZHCM_UX_ALPL_SRV.CalendarQuery" Multiplicity="1" Role="FromRole_CalendarQueryToLeaveRequest"/>
+                <End Type="ZHCM_UX_ALPL_SRV.LeaveRequest" Multiplicity="*" Role="ToRole_CalendarQueryToLeaveRequest"/>
+            </Association>
+            <EntityContainer Name="ZHCM_UX_ALPL_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="LeaveRequestSet" EntityType="ZHCM_UX_ALPL_SRV.LeaveRequest" sap:searchable="true" sap:content-version="1"/>
+                <EntitySet Name="PlannedLeaveOperationSet" EntityType="ZHCM_UX_ALPL_SRV.PlannedLeaveOperation" sap:searchable="true" sap:content-version="1"/>
+                <EntitySet Name="CalendarQuerySet" EntityType="ZHCM_UX_ALPL_SRV.CalendarQuery" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="LegendSet" EntityType="ZHCM_UX_ALPL_SRV.Legend" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="LegendItemSet" EntityType="ZHCM_UX_ALPL_SRV.LegendItem" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="ManualSet" EntityType="ZHCM_UX_ALPL_SRV.Manual" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="EmailTemplateSet" EntityType="ZHCM_UX_ALPL_SRV.EmailTemplate" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="HolidayCalendarSet" EntityType="ZHCM_UX_ALPL_SRV.HolidayCalendar" sap:searchable="true" sap:requires-filter="true" sap:content-version="1"/>
+                <EntitySet Name="HolidayInfoSet" EntityType="ZHCM_UX_ALPL_SRV.HolidayInfo" sap:searchable="true" sap:content-version="1"/>
+                <EntitySet Name="HolidayDateSet" EntityType="ZHCM_UX_ALPL_SRV.HolidayDate" sap:searchable="true" sap:content-version="1"/>
+                <EntitySet Name="EmployeeInfoSet" EntityType="ZHCM_UX_ALPL_SRV.EmployeeInfo" sap:searchable="true" sap:content-version="1"/>
+                <EntitySet Name="ReturnSet" EntityType="ZHCM_UX_ALPL_SRV.Return" sap:searchable="true" sap:content-version="1"/>
+                <EntitySet Name="PlannedLeaveSet" EntityType="ZHCM_UX_ALPL_SRV.PlannedLeave" sap:searchable="true" sap:content-version="1"/>
+                <EntitySet Name="TeamCalendarLeaveSet" EntityType="ZHCM_UX_ALPL_SRV.TeamCalendarLeave" sap:searchable="true" sap:content-version="1"/>
+                <EntitySet Name="TeamCalendarOrganizationSet" EntityType="ZHCM_UX_ALPL_SRV.TeamCalendarOrganization" sap:searchable="true" sap:content-version="1"/>
+                <EntitySet Name="TeamCalendarEmployeeSet" EntityType="ZHCM_UX_ALPL_SRV.TeamCalendarEmployee" sap:searchable="true" sap:content-version="1"/>
+                <AssociationSet Name="PlannedLeaveOperationToLeaveSet" Association="ZHCM_UX_ALPL_SRV.PlannedLeaveOperationToLeave" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="PlannedLeaveOperationSet" Role="FromRole_PlannedLeaveOperationToLeave"/>
+                    <End EntitySet="PlannedLeaveSet" Role="ToRole_PlannedLeaveOperationToLeave"/>
+                </AssociationSet>
+                <AssociationSet Name="TeamCalendarEmployeeToLeaveSet" Association="ZHCM_UX_ALPL_SRV.TeamCalendarEmployeeToLeave" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="TeamCalendarEmployeeSet" Role="FromRole_TeamCalendarEmployeeToLeave"/>
+                    <End EntitySet="TeamCalendarLeaveSet" Role="ToRole_TeamCalendarEmployeeToLeave"/>
+                </AssociationSet>
+                <AssociationSet Name="CalendarQueryToLeaveRequestSet" Association="ZHCM_UX_ALPL_SRV.CalendarQueryToLeaveRequest" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="CalendarQuerySet" Role="FromRole_CalendarQueryToLeaveRequest"/>
+                    <End EntitySet="LeaveRequestSet" Role="ToRole_CalendarQueryToLeaveRequest"/>
+                </AssociationSet>
+                <AssociationSet Name="LegendGroupToLegendItemSet" Association="ZHCM_UX_ALPL_SRV.LegendGroupToLegendItem" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="LegendSet" Role="FromRole_LegendGroupToLegendItem"/>
+                    <End EntitySet="LegendItemSet" Role="ToRole_LegendGroupToLegendItem"/>
+                </AssociationSet>
+                <AssociationSet Name="HolidayInfoToDateSet" Association="ZHCM_UX_ALPL_SRV.HolidayInfoToDate" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="HolidayInfoSet" Role="FromRole_HolidayInfoToDate"/>
+                    <End EntitySet="HolidayDateSet" Role="ToRole_HolidayInfoToDate"/>
+                </AssociationSet>
+                <AssociationSet Name="HolidayCalendarToInfoSet" Association="ZHCM_UX_ALPL_SRV.CalendarToHolidayInfo" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="HolidayCalendarSet" Role="FromRole_CalendarToHolidayInfo"/>
+                    <End EntitySet="HolidayInfoSet" Role="ToRole_CalendarToHolidayInfo"/>
+                </AssociationSet>
+                <AssociationSet Name="CalendarQueryToHolidayCalendarSet" Association="ZHCM_UX_ALPL_SRV.CalendarQueryToHolidayCalendar" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="CalendarQuerySet" Role="FromRole_CalendarQueryToHolidayCalendar"/>
+                    <End EntitySet="HolidayCalendarSet" Role="ToRole_CalendarQueryToHolidayCalendar"/>
+                </AssociationSet>
+                <AssociationSet Name="PlannedLeaveOperationToReturnSet" Association="ZHCM_UX_ALPL_SRV.PlannedLeaveOperationToReturn" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="PlannedLeaveOperationSet" Role="FromRole_PlannedLeaveOperationToReturn"/>
+                    <End EntitySet="ReturnSet" Role="ToRole_PlannedLeaveOperationToReturn"/>
+                </AssociationSet>
+                <AssociationSet Name="CalendarQueryToPlannedLeaveSet" Association="ZHCM_UX_ALPL_SRV.CalendarQueryToPlannedLeave" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="CalendarQuerySet" Role="FromRole_CalendarQueryToPlannedLeave"/>
+                    <End EntitySet="PlannedLeaveSet" Role="ToRole_CalendarQueryToPlannedLeave"/>
+                </AssociationSet>
+                <FunctionImport Name="CalculateQuota" ReturnType="ZHCM_UX_ALPL_SRV.PlannedLeave" EntitySet="PlannedLeaveSet" m:HttpMethod="GET">
+                    <Parameter Name="StartDate" Type="Edm.DateTime" Mode="In" Precision="7" sap:label="Zaman damgası"/>
+                    <Parameter Name="EndDate" Type="Edm.DateTime" Mode="In" Precision="7" sap:label="Zaman damgası"/>
+                </FunctionImport>
+                <FunctionImport Name="CheckManager" ReturnType="ZHCM_UX_ALPL_SRV.Return" EntitySet="ReturnSet" m:HttpMethod="GET"/>
+            </EntityContainer>
+            <atom:link rel="self" href="http://tks0154.thy.com:8000/sap/opu/odata/sap/ZHCM_UX_ALPL_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="http://tks0154.thy.com:8000/sap/opu/odata/sap/ZHCM_UX_ALPL_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

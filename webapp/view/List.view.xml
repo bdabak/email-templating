@@ -1,0 +1,49 @@
+<mvc:View
+    controllerName="com.thy.ux.emailtemplate.controller.List"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+>
+    <Page
+        id="listPage"
+        showHeader="false"
+    >
+        <!-- For client side filtering add this to the items attribute: parameters: {operationMode: 'Client'}}" -->
+        <List
+            id="list"
+            width="auto"
+            class="sapFDynamicPageAlignContent"
+            items="{
+                path: '/EmailTemplateSet'
+            }"
+            busyIndicatorDelay="0"
+            noDataText="Tanımlı şablon mevcut değil"
+            mode="{= ${device>/system/phone} ? 'None' : 'SingleSelectMaster'}"
+            growing="true"
+            growingScrollToLoad="true"
+            updateFinished=".onUpdateFinished"
+            selectionChange=".onSelectionChange"
+        >
+            <headerToolbar>
+                <OverflowToolbar>
+                    <Title
+                        text="{listView>/title}"
+                        level="H3"
+                    />
+                    <ToolbarSpacer />
+                    <Button
+                        id="newButton"
+                        press=".onNewTemplate"
+                        icon="sap-icon://add"
+                        type="Emphasized"
+                    />
+                </OverflowToolbar>
+            </headerToolbar>
+            <items>
+                <StandardListItem
+                    title="{TemplateId} - {TemplateCode}"
+                    description="{TemplateDescription}"
+                />
+            </items>
+        </List>
+    </Page>
+</mvc:View>

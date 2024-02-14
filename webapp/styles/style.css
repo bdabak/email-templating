@@ -1,0 +1,27 @@
+.swal2-container {
+  z-index: 20 !important;
+  font-family: "72", "72full", Arial, Helvetica, sans-serif;
+}
+
+body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown)
+  .swal2-container.swal2-backdrop-show,
+.swal2-container.swal2-noanimation {
+  background: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: blur(3px);
+}
+
+.swal2-html-message-container {
+  text-align: left !important;
+}
+
+.swal2-container.swal2-backdrop-show,
+.swal2-container.swal2-noanimation {
+  background: rgba(0, 0, 0, 0.35) !important;
+}
+
+
+.templateEditPage .sapMPageEnableScrolling {
+  overflow: hidden !important;
+  padding-bottom: 2.5rem !important;
+  bottom: 0 !important;
+}

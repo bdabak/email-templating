@@ -1,0 +1,139 @@
+{
+    "_version": "1.49.0",
+    "sap.app": {
+        "id": "com.thy.ux.emailtemplate",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "@sap/generator-fiori:listdetail",
+            "version": "1.9.0",
+            "toolsId": "cabce3a4-1657-4222-a6f1-c7d852499c1d"
+        },
+        "dataSources": {
+            "mainService": {
+                "uri": "/sap/opu/odata/sap/ZHCM_UX_ALPL_SRV/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/metadata.xml",
+                    "odataVersion": "2.0"
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": false,
+        "config": {
+            "fullWidth": true
+        },
+        "dependencies": {
+            "minUI5Version": "1.71.0",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {},
+                "sap.f": {},
+                "sap.suite.ui.generic.template": {},
+                "sap.ui.comp": {},
+                "sap.ui.generic.app": {},
+                "sap.ui.table": {},
+                "sap.ushell": {},
+                "com.smod.ux.lib": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "com.thy.ux.emailtemplate.i18n.i18n"
+                }
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {}
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "styles/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "viewPath": "com.thy.ux.emailtemplate.view",
+                "controlId": "app",
+                "controlAggregation": "pages",
+                "bypassed": {
+                    "target": [
+                        "notFound"
+                    ]
+                },
+                "async": true
+            },
+            "routes": [
+                {
+                    "pattern": "",
+                    "name": "list",
+                    "target": "list"
+                },
+                {
+                    "pattern": "maintain/{templateId}",
+                    "name": "maintain",
+                    "target": "maintain"
+                }
+            ],
+            "targets": {
+                "list": {
+                    "viewName": "List",
+                    "viewLevel": 1,
+                    "viewId": "list"
+                },
+                "maintain": {
+                    "viewName": "Maintain",
+                    "viewId": "maintain",
+                    "viewLevel": 2
+                },
+                "notFound": {
+                    "viewName": "NotFound",
+                    "viewId": "notFound"
+                }
+            }
+        },
+        "rootView": {
+            "viewName": "com.thy.ux.emailtemplate.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "app"
+        }
+    }
+}

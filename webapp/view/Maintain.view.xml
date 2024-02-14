@@ -1,0 +1,96 @@
+<mvc:View
+	controllerName="com.thy.ux.emailtemplate.controller.Maintain"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:smod="com.thy.ux.emailtemplate.controls"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core"
+	displayBlock="true"
+	height="100%"
+	busyIndicatorDelay="0"
+>
+	<Page
+		title="{maintainView>/pageTitle}"
+		busy="{maintainView>/busy}"
+		busyIndicatorDelay="0"
+		navButtonPress=".onNavBack"
+		showNavButton="true"
+		floatingFooter="false"
+		class="templateEditPage"
+	>
+		<content>
+			<f:Form
+				id="idTemplateSettings"
+				editable="true"
+			>
+				<f:title>
+					<core:Title text="E-posta Şablon Özellikleri" />
+				</f:title>
+				<f:layout>
+					<f:ResponsiveGridLayout
+						labelSpanXL="2"
+						labelSpanL="2"
+						labelSpanM="3"
+						labelSpanS="12"
+						adjustLabelSpan="false"
+						emptySpanXL="4"
+						emptySpanL="4"
+						emptySpanM="4"
+						emptySpanS="0"
+						columnsXL="1"
+						columnsL="1"
+						columnsM="1"
+						singleContainerFullSize="false"
+					/>
+				</f:layout>
+				<f:formContainers>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement label="Tanıtıcı">
+								<f:fields>
+									<Input
+										value="{maintainView>/emailTemplate/TemplateCode}"
+										id="uniqueDescriptor"
+									/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Mail Başlığı">
+								<f:fields>
+									<Input
+										value="{maintainView>/emailTemplate/TemplateDescription}"
+										id="templateDescription"
+									/>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+				</f:formContainers>
+			</f:Form>
+			<VBox class="htmlEditorMain">
+				<smod:HtmlEditor htmlString="{maintainView>/emailTemplate/HtmlString}" />
+			</VBox>
+		</content>
+		<footer>
+			<Toolbar>
+			<Button
+					type="Back"
+					text="Geri"
+					press=".onCancelEditing"
+				/>
+				<ToolbarSpacer />
+				<Button
+					type="Reject"
+					icon="sap-icon://delete"
+					press=".onDeleteTemplate"
+					visible="{= ${maintainView>/emailTemplate/TemplateId} !== null }"
+				/>
+				<Button
+					type="Accept"
+					icon="sap-icon://save"
+					press=".onSaveTemplate"
+				/>
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

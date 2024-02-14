@@ -1,0 +1,10 @@
+<mvc:View
+    controllerName="com.thy.ux.emailtemplate.controller.App"
+    displayBlock="true"
+    height="100%"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc">
+    	<App id="app"
+		 busy="{appView>/busy}"
+		 busyIndicatorDelay="{appView>/delay}"/>
+</mvc:View>
